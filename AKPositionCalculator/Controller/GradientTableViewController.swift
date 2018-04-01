@@ -9,25 +9,49 @@ import UIKit
 
 class GradientTableViewController: UITableViewController {
 
+    enum Segment: Int {
+        case equalBtc, equalDollar
+    }
+
     let notificationFeedback = UINotificationFeedbackGenerator()
     var gradient: Gradient?
+    var segment = Segment.equalBtc
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
     }
 
+    @IBAction func equalSegmentDidChange(sender: UISegmentedControl) {
+
+        guard let segment = Segment(rawValue: sender.selectedSegmentIndex) else {
+            return
+        }
+        self.segment = segment
+        tableView.reloadData()
+    }
+
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return gradient?.orders?.count ?? 1
+        switch segment {
+        case .equalBtc:
+            return gradient?.equalBtcOrders?.count ?? 1
+        case .equalDollar:
+            return gradient?.equalDollarOrders?.count ?? 1
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "GradientTableViewCell", for: indexPath) as! GradientTableViewCell
-        cell.setup(order: gradient?.orders?[indexPath.row])
+        switch segment {
+        case .equalBtc:
+            cell.setup(order: gradient?.equalBtcOrders?[indexPath.row])
+        case .equalDollar:
+            cell.setup(order: gradient?.equalDollarOrders?[indexPath.row])
+        }
         return cell
     }
 

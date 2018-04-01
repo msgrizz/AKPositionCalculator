@@ -38,6 +38,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var endPriceField: ValueField!
     @IBOutlet weak var intervalField: ValueField!
     @IBOutlet weak var progressView: UIProgressView!
+    @IBOutlet weak var fundingRateLabel: UILabel!
+    @IBOutlet weak var indicativeFundingRateLabel: UILabel!
     @IBOutlet weak var bitstampButton: UIButton!
     @IBOutlet weak var bitfinexButton: UIButton!
     @IBOutlet weak var bitmexSwapButton: UIButton!
@@ -199,7 +201,17 @@ class ViewController: UIViewController {
         bitmex.rx.request(.swap).map {
             return try? JSONDecoder().decode([Bitmex.Instrument].self, from: $0.data)
         }.subscribe(onSuccess: { [weak self] response in
-            self?.bitmexSwapButton.setTitle(response?.first?.lastPrice?.toString(2), for: .normal)
+            guard let weakSelf = self, let entity = response?.first else {
+                return
+            }
+            weakSelf.bitmexSwapButton.setTitle(entity.lastPrice?.toString(2), for: .normal)
+            weakSelf.fundingRateLabel.text = entity.fundingRate.map { $0 * 100 }?.toString(4)
+            weakSelf.indicativeFundingRateLabel.text = entity.indicativeFundingRate.map { $0 * 100 }?.toString(4)
+            guard let fundingRate = entity.fundingRate, let indicativeFundingRate = entity.indicativeFundingRate else {
+                return
+            }
+            weakSelf.fundingRateLabel.textColor = fundingRate > 0 ? .green : .red
+            weakSelf.indicativeFundingRateLabel.textColor = indicativeFundingRate > 0 ? .green : .red
         }, onError: nil).disposed(by: disposeBag)
 
         bitmex.rx.request(.quarterly).map {

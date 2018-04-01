@@ -23,7 +23,7 @@ struct Gradient {
         return Int(exactly: ceil(abs(startPrice - endPrice) / interval)).map { $0 + 1 }
     }
 
-    private var portion: Double? {
+    private var btcPortion: Double? {
         switch position {
         case .btc(let value):
             return orderCount.map { value / Double($0) }
@@ -32,24 +32,45 @@ struct Gradient {
         }
     }
 
+    private var dollarPortion: Double? {
+        switch position {
+        case .btc(let value):
+            return orderCount.map { value * average / Double($0) }
+        case .dollar(let value):
+            return orderCount.map { value / Double($0) }
+        }
+    }
+
     var average: Double {
         return (startPrice + endPrice) / 2
     }
 
-    var orders: [Order]? {
+    var equalBtcOrders: [Order]? {
 
-        guard let count = orderCount, let portion = portion, startPrice != endPrice else {
+        guard let count = orderCount, let btcPortion = btcPortion, startPrice != endPrice else {
             return nil
         }
         return Array(0..<count).map {
             let offset = Double($0) * interval
             let price = startPrice + (startPrice > endPrice ? -offset : offset)
-            return Order(price: price.roundedInt, amount: (price * portion).roundedInt)
+            return Order(price: price.roundedInt, amount: (price * btcPortion).roundedInt)
+        }
+    }
+
+    var equalDollarOrders: [Order]? {
+
+        guard let count = orderCount, let dollarPortion = dollarPortion, startPrice != endPrice else {
+            return nil
+        }
+        return Array(0..<count).map {
+            let offset = Double($0) * interval
+            let price = startPrice + (startPrice > endPrice ? -offset : offset)
+            return Order(price: price.roundedInt, amount: dollarPortion.roundedInt)
         }
     }
 
     var total: Int? {
-        return orders?.reduce(0) { $0 + ($1.amount ?? 0) }
+        return equalBtcOrders?.reduce(0) { $0 + ($1.amount ?? 0) }
     }
 }
 
