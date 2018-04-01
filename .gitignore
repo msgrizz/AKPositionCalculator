@@ -1,0 +1,6 @@
+/Carthage
+/AKPositionCalculatorTests
+/AKPositionCalculatorUITests
+Cartfile.resolved
+.DS_Store
+*.xcuserstate
