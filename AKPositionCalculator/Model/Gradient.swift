@@ -53,7 +53,7 @@ struct Gradient {
         return Array(0..<count).map {
             let offset = Double($0) * interval
             let price = startPrice + (startPrice > endPrice ? -offset : offset)
-            return Order(price: price.roundedInt, amount: (price * btcPortion).roundedInt)
+            return Order(price: price.roundedInt, btcAmount: btcPortion, dollarAmount: price * btcPortion)
         }
     }
 
@@ -65,17 +65,22 @@ struct Gradient {
         return Array(0..<count).map {
             let offset = Double($0) * interval
             let price = startPrice + (startPrice > endPrice ? -offset : offset)
-            return Order(price: price.roundedInt, amount: dollarPortion.roundedInt)
+            return Order(price: price.roundedInt, btcAmount: dollarPortion / price, dollarAmount: dollarPortion)
         }
     }
 
-    var total: Int? {
-        return equalBtcOrders?.reduce(0) { $0 + ($1.amount ?? 0) }
+    var totalBtc: Double? {
+        return equalBtcOrders?.reduce(0) { $0 + ($1.btcAmount ?? 0) }
+    }
+
+    var totalDollar: Double? {
+        return equalDollarOrders?.reduce(0) { $0 + ($1.dollarAmount ?? 0) }
     }
 }
 
 struct Order {
 
     let price: Int?
-    let amount: Int?
+    let btcAmount: Double?
+    let dollarAmount: Double?
 }

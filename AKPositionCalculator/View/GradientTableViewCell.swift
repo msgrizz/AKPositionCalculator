@@ -10,7 +10,8 @@ import UIKit
 class GradientTableViewCell: UITableViewCell {
 
     @IBOutlet weak var priceLabel: UILabel!
-    @IBOutlet weak var amountLabel: UILabel!
+    @IBOutlet weak var btcAmountLabel: UILabel!
+    @IBOutlet weak var dollarAmountLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,7 +25,8 @@ class GradientTableViewCell: UITableViewCell {
             return
         }
         priceLabel.text = order.price?.description
-        amountLabel.text = order.amount?.description
+        btcAmountLabel.text = order.btcAmount?.toString(4)
+        dollarAmountLabel.text = order.dollarAmount?.roundedInt?.description
     }
 
 }

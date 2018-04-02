@@ -67,7 +67,7 @@ class GradientTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         view.makeToast("已复制", duration: 0.5, position: .center)
         let cell = tableView.cellForRow(at: indexPath) as! GradientTableViewCell
-        UIPasteboard.general.string = cell.amountLabel.text
+        UIPasteboard.general.string = cell.dollarAmountLabel.text
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

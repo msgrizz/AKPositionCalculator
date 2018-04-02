@@ -11,6 +11,7 @@ struct UserDefaultsKey {
 
     static let version              = "version"
     static let isNotFirstTime       = "isNotFirstTime"
+    static let doesShowSetting      = "doesShowSetting"
     static let akCapital            = "akCapital"
     static let myCapital            = "myCapital"
     static let multiple             = "multiple"

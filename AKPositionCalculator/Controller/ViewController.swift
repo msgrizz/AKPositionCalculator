@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     private let disposeBag = DisposeBag()
 
     //MARK: - IBOutlet
-    
+
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var akCapitalField: ValueField!
     @IBOutlet weak var myCapitalField: ValueField!
@@ -48,8 +48,20 @@ class ViewController: UIViewController {
     @IBOutlet weak var gradientBtcField: ValueField!
     @IBOutlet weak var gradientDollarField: ValueField!
     @IBOutlet weak var gradientPercentageField: ValueField!
+    @IBOutlet weak var basicSettingButton:  UIButton!
+    @IBOutlet weak var basicSettingViewHeight: NSLayoutConstraint!
 
     //MARK: - IBAction
+
+    @IBAction func didTapBasicSettingButton(sender: UIButton) {
+
+        toggleBasicSettingView()
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            self?.view.layoutIfNeeded()
+        }, completion: { _ in
+            sender.isUserInteractionEnabled = true
+        })
+    }
 
     @IBAction func didTouchDownButton(sender: UIButton) {
         lightImpactFeedback.prepare()
@@ -95,6 +107,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setupBasicSettingView()
 
         let alert = UIAlertController(title: "注意", message: "本APP仅供学习期货相关知识。\n作者对因使用本APP而造成的一切损失概不负责。", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "同意", style: .default, handler: { _ in alert.dismiss(animated: true, completion: nil) }))
@@ -195,7 +209,7 @@ class ViewController: UIViewController {
         bitfinex.rx.request(.ticker).map {
             return try? JSONDecoder().decode(Bitfinex.Ticker.self, from: $0.data)
         }.subscribe(onSuccess: { [weak self] response in
-            self?.bitfinexButton.setTitle(response?.last_price, for: .normal)
+            self?.bitfinexButton.setTitle((response?.last_price).flatMap { Double($0)?.toString(2) }, for: .normal)
         }, onError: nil).disposed(by: disposeBag)
 
         bitmex.rx.request(.swap).map {
@@ -210,8 +224,8 @@ class ViewController: UIViewController {
             guard let fundingRate = entity.fundingRate, let indicativeFundingRate = entity.indicativeFundingRate else {
                 return
             }
-            weakSelf.fundingRateLabel.textColor = fundingRate > 0 ? .green : .red
-            weakSelf.indicativeFundingRateLabel.textColor = indicativeFundingRate > 0 ? .green : .red
+            weakSelf.fundingRateLabel.textColor = fundingRate > 0 ? #colorLiteral(red: 0, green: 0.4667, blue: 0.0353, alpha: 1) : .red
+            weakSelf.indicativeFundingRateLabel.textColor = indicativeFundingRate > 0 ? #colorLiteral(red: 0, green: 0.4667, blue: 0.0353, alpha: 1) : .red
         }, onError: nil).disposed(by: disposeBag)
 
         bitmex.rx.request(.quarterly).map {
@@ -265,7 +279,8 @@ class ViewController: UIViewController {
     }
     
     private func calculateMyPosition() {
-        
+
+        multipleField.text = standardRatioLabel.text.flatMap{ Double($0) }.map { customRatioField.value / $0 }.map { $0.toString(2) }
         myPositionLabel.text = (akPositionField.value * customRatioField.value * customPriceField.value).roundedInt?.description
         myPositionBtcLabel.text = (akPositionField.value * customRatioField.value).toString(4)
     }
@@ -289,6 +304,20 @@ class ViewController: UIViewController {
                 views.forEach { $0.backgroundColor = .white }
             }
         })
+    }
+
+    private func setupBasicSettingView() {
+
+        let doesShowSetting = UserDefaults.standard.bool(forKey: UserDefaultsKey.doesShowSetting)
+        basicSettingViewHeight.constant = doesShowSetting ? 172 : 0
+        basicSettingButton.setTitle(doesShowSetting ? "隐藏设置" : "展开设置", for: .normal)
+    }
+
+    private func toggleBasicSettingView() {
+
+        let doesShowSetting = UserDefaults.standard.bool(forKey: UserDefaultsKey.doesShowSetting)
+        UserDefaults.standard.set(!doesShowSetting, forKey: UserDefaultsKey.doesShowSetting)
+        setupBasicSettingView()
     }
 
     //MARK: UserDefaults
