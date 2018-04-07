@@ -11,21 +11,32 @@ class ValueField: UITextField {
     
     var doneClosure: (() -> Void)?
     var cancelClosure: (() -> Void)?
-    var previousText: String?
     
     var value: Double {
         get {
             return Double(text ?? "") ?? 0
         }
         set {
+            previousText = text
             text = newValue.string
         }
     }
+    private var previousText: String?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         delegate = self
+    }
+
+    func clear() {
+
+        previousText = text
+        text = nil
+    }
+
+    func restore() {
+        text = previousText
     }
 
     func addDoneCancelToolbar(onDone: (() -> Void)? = nil, onCancel: (() -> Void)? = nil) {

@@ -43,14 +43,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func setupUserDefaults() {
 
-        guard let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
+        guard let newVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else {
             return
         }
-        if version == UserDefaults.standard.string(forKey: UserDefaultsKey.version) {
+        let oldVersion = UserDefaults.standard.string(forKey: UserDefaultsKey.version)
+        if newVersion == oldVersion || oldVersion == "1.0.3" {
             return
         }
         UserDefaults.setDefaultValues()
-        UserDefaults.standard.set(version, forKey: UserDefaultsKey.version)
+        UserDefaults.standard.set(newVersion, forKey: UserDefaultsKey.version)
     }
 
 

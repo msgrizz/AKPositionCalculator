@@ -29,6 +29,9 @@
 		274154EC205E3FF400A4BE1B /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 27415471205D0ACB00A4BE1B /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		274154F4205E40A000A4BE1B /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274154AB205D1B2900A4BE1B /* Result.framework */; };
 		274154F5205E40A000A4BE1B /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 274154AB205D1B2900A4BE1B /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2749DEEA20751E5E00ABB1B8 /* M13Checkbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2749DEE920751E5E00ABB1B8 /* M13Checkbox.framework */; };
+		2749DEEC20751EFF00ABB1B8 /* M13Checkbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2749DEE920751E5E00ABB1B8 /* M13Checkbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2749DEEE20752A0800ABB1B8 /* Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2749DEED20752A0800ABB1B8 /* Bool.swift */; };
 		27511B2A205B94E6005ACF65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27511B29205B94E6005ACF65 /* AppDelegate.swift */; };
 		27511B2C205B94E6005ACF65 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27511B2B205B94E6005ACF65 /* ViewController.swift */; };
 		27511B2F205B94E6005ACF65 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27511B2D205B94E6005ACF65 /* Main.storyboard */; };
@@ -70,6 +73,7 @@
 				274154D8205E3F5900A4BE1B /* Moya.framework in Embed Frameworks */,
 				274154F5205E40A000A4BE1B /* Result.framework in Embed Frameworks */,
 				274154A3205D164300A4BE1B /* ToastSwiftFramework.framework in Embed Frameworks */,
+				2749DEEC20751EFF00ABB1B8 /* M13Checkbox.framework in Embed Frameworks */,
 				274154EC205E3FF400A4BE1B /* Alamofire.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -97,6 +101,8 @@
 		274154CB205D5E5200A4BE1B /* Bitfinex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bitfinex.swift; sourceTree = "<group>"; };
 		274154CD205DFF7700A4BE1B /* GradientTableViewFooterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientTableViewFooterCell.swift; sourceTree = "<group>"; };
 		274154CF205E02BC00A4BE1B /* Bitmex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bitmex.swift; sourceTree = "<group>"; };
+		2749DEE920751E5E00ABB1B8 /* M13Checkbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = M13Checkbox.framework; path = Carthage/Build/iOS/M13Checkbox.framework; sourceTree = "<group>"; };
+		2749DEED20752A0800ABB1B8 /* Bool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bool.swift; sourceTree = "<group>"; };
 		27511B26205B94E6005ACF65 /* AKPositionCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AKPositionCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27511B29205B94E6005ACF65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27511B2B205B94E6005ACF65 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -120,6 +126,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2749DEEA20751E5E00ABB1B8 /* M13Checkbox.framework in Frameworks */,
 				274154E0205E3FC800A4BE1B /* Moya.framework in Frameworks */,
 				274154F4205E40A000A4BE1B /* Result.framework in Frameworks */,
 				274154E4205E3FC800A4BE1B /* RxMoya.framework in Frameworks */,
@@ -149,6 +156,7 @@
 		2741546B205CFF8300A4BE1B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2749DEE920751E5E00ABB1B8 /* M13Checkbox.framework */,
 				274154AA205D1B2900A4BE1B /* Moya.framework */,
 				274154AB205D1B2900A4BE1B /* Result.framework */,
 				274154AC205D1B2900A4BE1B /* RxMoya.framework */,
@@ -232,6 +240,7 @@
 			children = (
 				27146501205CCCE700DE85CF /* Double.swift */,
 				27415469205CFA9B00A4BE1B /* UserDefaults.swift */,
+				2749DEED20752A0800ABB1B8 /* Bool.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -425,6 +434,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				274154CA205D1BD700A4BE1B /* Bitstamp.swift in Sources */,
+				2749DEEE20752A0800ABB1B8 /* Bool.swift in Sources */,
 				27415468205CF39B00A4BE1B /* UserDefaultsKey.swift in Sources */,
 				27511B5E205BB560005ACF65 /* ValueField.swift in Sources */,
 				27E65B9A206FC157007F17F1 /* AboutViewController.swift in Sources */,

@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     private let bitfinex = MoyaProvider<Bitfinex>()
     private let bitmex = MoyaProvider<Bitmex>()
     private let disposeBag = DisposeBag()
+    private var unwindClosure: (() -> Void)?
 
     //MARK: - IBOutlet
 
@@ -34,6 +35,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var customPriceField: ValueField!
     @IBOutlet weak var myPositionBtcLabel: UILabel!
     @IBOutlet weak var myPositionLabel: UILabel!
+    @IBOutlet weak var customBtcField: ValueField!
+    @IBOutlet weak var customPositionLabel: UILabel!
     @IBOutlet weak var startPriceField: ValueField!
     @IBOutlet weak var endPriceField: ValueField!
     @IBOutlet weak var intervalField: ValueField!
@@ -87,20 +90,27 @@ class ViewController: UIViewController {
         }
         calculate(.myPosition)
     }
-    
-    @IBAction func didTapCopyButton(sender: UIButton) {
-
-        notificationFeedback.notificationOccurred(.success)
-        view.makeToast("已复制", duration: 0.5, position: .center)
-        UIPasteboard.general.string = myPositionLabel.text
-    }
 
     @IBAction func didTapPriceButton(sender: UIButton) {
 
         lightImpactFeedback.impactOccurred()
         customPriceField.text = sender.titleLabel?.text
-        shine(views: [customPriceField, myPositionLabel])
+        shine(views: [customPriceField, myPositionLabel, customPositionLabel])
         calculate(.myPosition)
+    }
+
+    @IBAction func didTapMyPositionLabel() {
+
+        notificationFeedback.notificationOccurred(.success)
+        view.makeToast("已复制 \(myPositionLabel.text ?? "")", duration: 0.5, position: .center)
+        UIPasteboard.general.string = myPositionLabel.text
+    }
+
+    @IBAction func didTapCustomPositionLabel() {
+
+        notificationFeedback.notificationOccurred(.success)
+        view.makeToast("已复制 \(customPositionLabel.text ?? "")", duration: 0.5, position: .center)
+        UIPasteboard.general.string = customPositionLabel.text
     }
 
     //MARK: - Life Cycle
@@ -108,33 +118,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        showAlert()
         setupBasicSettingView()
-
-        let alert = UIAlertController(title: "注意", message: "本APP仅供学习期货相关知识。\n作者对因使用本APP而造成的一切损失概不负责。", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "同意", style: .default, handler: { _ in alert.dismiss(animated: true, completion: nil) }))
-        alert.addAction(UIAlertAction(title: "不同意", style: .cancel, handler: { _ in exit(0) }))
-        present(alert, animated: true, completion: nil)
+        setupFields()
+        fetch()
 
         NotificationCenter.default.addObserver(self, selector: #selector(appWillTerminateNotification),
                                                name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
-
-        [akCapitalField, myCapitalField].forEach {
-            $0?.addDoneCancelToolbar(onDone: { [weak self] in self?.calculate(.all) })
-        }
-        [multipleField].forEach {
-            $0?.addDoneCancelToolbar(onDone: { [weak self] in self?.calculate([.customRatio, .myPosition]) })
-        }
-        [customRatioField, akPositionField, customPriceField].forEach {
-            $0?.addDoneCancelToolbar(onDone: { [weak self] in self?.calculate(.myPosition) })
-        }
-        [gradientBtcField, gradientDollarField, gradientPercentageField, startPriceField, endPriceField, intervalField].forEach {
-            $0?.addDoneCancelToolbar(
-                onDone: { [weak self] in self?.resetContentInset() },
-                onCancel: { [weak self] in self?.resetContentInset() }
-            )
-            $0?.delegate = self
-        }
-        fetch()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -143,6 +133,12 @@ class ViewController: UIViewController {
         resetContentInset(animated: false)
         loadUserDefaults()
         calculate([.standardRatio, .myPosition])
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        unwindClosure?()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -187,6 +183,20 @@ class ViewController: UIViewController {
                 endPrice:   endPriceField.value,
                 interval:   intervalField.value
             )
+        }
+    }
+
+    @IBAction func unwindToHere(segue: UIStoryboardSegue) {
+
+        lightImpactFeedback.prepare()
+        unwindClosure = { [weak self] in
+            guard let weakSelf = self else {
+                return
+            }
+            weakSelf.lightImpactFeedback.impactOccurred()
+            weakSelf.customBtcField.text = (segue.source as? GradientTableViewController)?.unwindData?.toString(4)
+            weakSelf.calculateCustomPosition()
+            weakSelf.shine(views: [weakSelf.customBtcField, weakSelf.customPositionLabel])
         }
     }
 
@@ -283,27 +293,28 @@ class ViewController: UIViewController {
         multipleField.text = standardRatioLabel.text.flatMap{ Double($0) }.map { customRatioField.value / $0 }.map { $0.toString(2) }
         myPositionLabel.text = (akPositionField.value * customRatioField.value * customPriceField.value).roundedInt?.description
         myPositionBtcLabel.text = (akPositionField.value * customRatioField.value).toString(4)
+
+        if customBtcField.text == "" {
+            customBtcField.placeholder = myPositionBtcLabel.text
+            customPositionLabel.text = myPositionLabel.text
+        } else {
+            customPositionLabel.text = (customBtcField.value * customPriceField.value).roundedInt?.description
+        }
+    }
+
+    private func calculateCustomPosition() {
+
+        customPositionLabel.text = (customBtcField.value * customPriceField.value).roundedInt?.description
     }
 
     //MARK: View Control
 
-    private func resetContentInset(animated: Bool = true) {
+    private func showAlert() {
 
-        UIView.animate(withDuration: animated ? 0.2 : 0) { [weak self] in
-            self?.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            self?.scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        }
-    }
-
-    private func shine(views: [UIView]) {
-
-        UIView.animate(withDuration: 0.1, animations: {
-            views.forEach { $0.backgroundColor = UIColor.green.withAlphaComponent(0.3) }
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.1) {
-                views.forEach { $0.backgroundColor = .white }
-            }
-        })
+        let alert = UIAlertController(title: "注意", message: "所有计算结果仅供参考。实际仓位请以交易所为准。作者对因使用本APP而造成的一切损失概不负责。", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "同意", style: .default, handler: { _ in alert.dismiss(animated: true, completion: nil) }))
+        alert.addAction(UIAlertAction(title: "不同意", style: .cancel, handler: { _ in exit(0) }))
+        present(alert, animated: true, completion: nil)
     }
 
     private func setupBasicSettingView() {
@@ -318,6 +329,52 @@ class ViewController: UIViewController {
         let doesShowSetting = UserDefaults.standard.bool(forKey: UserDefaultsKey.doesShowSetting)
         UserDefaults.standard.set(!doesShowSetting, forKey: UserDefaultsKey.doesShowSetting)
         setupBasicSettingView()
+    }
+
+    private func setupFields() {
+
+        customBtcField.delegate = self
+        customPriceField.delegate = self
+
+        [akCapitalField, myCapitalField].forEach {
+            $0?.addDoneCancelToolbar(onDone: { [weak self] in self?.calculate(.all) })
+        }
+        [multipleField].forEach {
+            $0?.addDoneCancelToolbar(onDone: { [weak self] in self?.calculate([.customRatio, .myPosition]) })
+        }
+        [customRatioField, akPositionField, customPriceField].forEach {
+            $0?.addDoneCancelToolbar(onDone: { [weak self] in self?.calculate(.myPosition) })
+        }
+        [gradientBtcField, gradientDollarField, gradientPercentageField, startPriceField, endPriceField, intervalField].forEach {
+            $0?.addDoneCancelToolbar(
+                onDone: { [weak self] in self?.resetContentInset() },
+                onCancel: { [weak self] in self?.resetContentInset() }
+            )
+            $0?.delegate = self
+        }
+        customBtcField.addDoneCancelToolbar(
+            onDone: { [weak self] in self?.calculateCustomPosition() },
+            onCancel: { [weak self] in self?.customBtcField.restore() })
+        customPriceField.cancelClosure = { [weak self] in self?.customPriceField.restore() }
+    }
+
+    private func resetContentInset(animated: Bool = true) {
+
+        UIView.animate(withDuration: animated ? 0.2 : 0) { [weak self] in
+            self?.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            self?.scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
+    }
+
+    private func shine(views: [UIView]) {
+
+        UIView.animate(withDuration: 0.1, animations: {
+            views.forEach { $0.backgroundColor = #colorLiteral(red: 0.549, green: 0.8941, blue: 1, alpha: 1) }
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.1) {
+                views.forEach { $0.backgroundColor = .white }
+            }
+        })
     }
 
     //MARK: UserDefaults
@@ -357,6 +414,14 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: UITextFieldDelegate {
+
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+
+        if let textField = textField as? ValueField, textField  == customBtcField || textField == customPriceField{
+            textField.clear()
+        }
+        return true
+    }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
 
@@ -365,7 +430,3 @@ extension ViewController: UITextFieldDelegate {
         scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
     }
 }
-
-
-
-
