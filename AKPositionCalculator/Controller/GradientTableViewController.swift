@@ -14,7 +14,8 @@ class GradientTableViewController: UITableViewController {
     }
 
     let notificationFeedback = UINotificationFeedbackGenerator()
-    var unwindData: Double? = 0
+    var unwindBtc: Double? = 0
+    var unwindPrice: Double? = 0
     var gradient: Gradient?
     private var segment = Segment.equalBtc
     fileprivate var priceCheckedIndexPaths = [IndexPath]()
@@ -22,6 +23,7 @@ class GradientTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        unwindPrice = gradient?.average
     }
 
     @IBAction func equalSegmentDidChange(sender: UISegmentedControl) {
@@ -71,14 +73,14 @@ class GradientTableViewController: UITableViewController {
         let n = tableView.numberOfRows(inSection: 0) - priceCheckedIndexPaths.count
         switch segment {
         case .equalBtc:
-            unwindData = gradient?.equalBtcOrders?.dropLast(n).reduce(0) { $0 + ($1.btcAmount ?? 0) }
+            unwindBtc = gradient?.equalBtcOrders?.dropLast(n).reduce(0) { $0 + ($1.btcAmount ?? 0) }
             footerCell.setup(gradient: gradient,
-                             dealedBtcAmount: unwindData,
+                             dealedBtcAmount: unwindBtc,
                              dealedDollarAmount: gradient?.equalBtcOrders?.dropLast(n).reduce(0) { $0 + ($1.dollarAmount ?? 0) })
         case .equalDollar:
-            unwindData = gradient?.equalDollarOrders?.dropLast(n).reduce(0) { $0 + ($1.btcAmount ?? 0) }
+            unwindBtc = gradient?.equalDollarOrders?.dropLast(n).reduce(0) { $0 + ($1.btcAmount ?? 0) }
             footerCell.setup(gradient: gradient,
-                             dealedBtcAmount: unwindData,
+                             dealedBtcAmount: unwindBtc,
                              dealedDollarAmount: gradient?.equalDollarOrders?.dropLast(n).reduce(0) { $0 + ($1.dollarAmount ?? 0) })
         }
         return footerCell

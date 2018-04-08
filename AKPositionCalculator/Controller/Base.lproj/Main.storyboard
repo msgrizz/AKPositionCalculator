@@ -450,14 +450,14 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="1lm-SO-Euq">
+                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="1lm-SO-Euq">
                                                                 <rect key="frame" x="181.33333333333331" y="0.0" width="173.33333333333331" height="43"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lxa-4A-51I">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="86.666666666666671" height="43"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="81.666666666666671" height="43"/>
                                                                         <subviews>
                                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="igo-uq-jcm" customClass="ValueField" customModule="AKPositionCalculator" customModuleProvider="target">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="76.666666666666671" height="43"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="71.666666666666671" height="43"/>
                                                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -473,7 +473,7 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NMS-bU-Dfp">
-                                                                        <rect key="frame" x="86.666666666666686" y="0.0" width="86.666666666666686" height="43"/>
+                                                                        <rect key="frame" x="91.666666666666686" y="0.0" width="81.666666666666686" height="43"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
@@ -495,21 +495,20 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="xCy-Ak-Fv7">
+                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="xCy-Ak-Fv7">
                                                                 <rect key="frame" x="181.33333333333331" y="0.0" width="173.33333333333331" height="43"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P1R-ef-UWZ">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="86.666666666666671" height="43"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="81.666666666666671" height="43"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TeQ-b6-RGn">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="86.666666666666671" height="43"/>
-                                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="81.666666666666671" height="43"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gec-mJ-dWZ">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="86.666666666666671" height="43"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="81.666666666666671" height="43"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <connections>
                                                                                     <action selector="didTapCustomPositionLabel" destination="BYZ-38-t0r" eventType="touchUpInside" id="89A-wS-GJg"/>
@@ -517,7 +516,6 @@
                                                                                 </connections>
                                                                             </button>
                                                                         </subviews>
-                                                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="bottom" secondItem="gec-mJ-dWZ" secondAttribute="bottom" id="9vA-MH-xVs"/>
                                                                             <constraint firstAttribute="bottom" secondItem="TeQ-b6-RGn" secondAttribute="bottom" id="Bgi-FB-X54"/>
@@ -530,16 +528,16 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="waj-dE-rpl">
-                                                                        <rect key="frame" x="86.666666666666686" y="0.0" width="86.666666666666686" height="43"/>
+                                                                        <rect key="frame" x="91.666666666666686" y="0.0" width="81.666666666666686" height="43"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bVV-qQ-NZ4">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="86.666666666666671" height="43"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="81.666666666666671" height="43"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                             </label>
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="efc-63-PkR">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="86.666666666666671" height="43"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="81.666666666666671" height="43"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <connections>
                                                                                     <action selector="didTapMyPositionLabel" destination="BYZ-38-t0r" eventType="touchUpInside" id="deT-Ea-lht"/>
@@ -963,12 +961,13 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8SB-bw-Ug2">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XEx-Mi-tNi">
                                                             <rect key="frame" x="236.66666666666666" y="0.0" width="118.33333333333334" height="20"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
+                                                            <state key="normal" title="Button"/>
+                                                            <connections>
+                                                                <segue destination="vV6-N5-9eg" kind="unwind" identifier="price" unwindAction="unwindToHereWithSegue:" id="oHp-uW-2vl"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="IUV-dU-pYK">
@@ -980,11 +979,11 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jCB-Xf-ig9">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jCB-Xf-ig9">
                                                             <rect key="frame" x="118.33333333333334" y="0.0" width="118.33333333333334" height="19.666666666666668"/>
                                                             <state key="normal" title="Button"/>
                                                             <connections>
-                                                                <segue destination="vV6-N5-9eg" kind="unwind" unwindAction="unwindToHereWithSegue:" id="EoN-oF-PIg"/>
+                                                                <segue destination="vV6-N5-9eg" kind="unwind" identifier="btc" unwindAction="unwindToHereWithSegue:" id="EoN-oF-PIg"/>
                                                             </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L29-R8-OYo">
@@ -1030,7 +1029,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="averagePriceLabel" destination="8SB-bw-Ug2" id="rBd-Uk-NsS"/>
+                                    <outlet property="averagePriceButton" destination="XEx-Mi-tNi" id="mXD-3V-raZ"/>
                                     <outlet property="dealedBtcButton" destination="jCB-Xf-ig9" id="cch-TA-hBz"/>
                                     <outlet property="dealedDollarLabel" destination="L29-R8-OYo" id="1Qg-s9-8iT"/>
                                     <outlet property="totalBtcLabel" destination="Iql-eo-uzQ" id="F6e-nm-Co4"/>

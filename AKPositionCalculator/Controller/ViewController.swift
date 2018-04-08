@@ -76,6 +76,7 @@ class ViewController: UIViewController {
         lightImpactFeedback.impactOccurred()
         let mutiples = [1, 1.2, 1.5, 2, 3]
         multipleField.text = mutiples[sender.tag].string
+        shine(views: [myPositionBtcLabel, myPositionLabel])
         calculate([.customRatio, .myPosition])
     }
     
@@ -88,6 +89,7 @@ class ViewController: UIViewController {
         } else {
             akPositionField.text = "0"
         }
+        shine(views: [myPositionBtcLabel, myPositionLabel])
         calculate(.myPosition)
     }
 
@@ -194,9 +196,16 @@ class ViewController: UIViewController {
                 return
             }
             weakSelf.lightImpactFeedback.impactOccurred()
-            weakSelf.customBtcField.text = (segue.source as? GradientTableViewController)?.unwindData?.toString(4)
-            weakSelf.calculateCustomPosition()
-            weakSelf.shine(views: [weakSelf.customBtcField, weakSelf.customPositionLabel])
+            if segue.identifier == "btc" {
+                weakSelf.customBtcField.text = (segue.source as? GradientTableViewController)?.unwindBtc?.toString(4)
+                weakSelf.calculateCustomPosition()
+                weakSelf.shine(views: [weakSelf.customBtcField, weakSelf.customPositionLabel])
+            } else if segue.identifier == "price" {
+                weakSelf.customPriceField.text = (segue.source as? GradientTableViewController)?.unwindPrice?.roundedInt?.description
+                weakSelf.calculateMyPosition()
+                weakSelf.shine(views: [weakSelf.customPriceField, weakSelf.customPositionLabel, weakSelf.myPositionBtcLabel, weakSelf.myPositionLabel])
+            }
+            weakSelf.unwindClosure = nil
         }
     }
 
@@ -368,13 +377,25 @@ class ViewController: UIViewController {
 
     private func shine(views: [UIView]) {
 
-        UIView.animate(withDuration: 0.1, animations: {
-            views.forEach { $0.backgroundColor = #colorLiteral(red: 0.549, green: 0.8941, blue: 1, alpha: 1) }
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.1) {
-                views.forEach { $0.backgroundColor = .white }
-            }
-        })
+        UIView.animateKeyframes(
+            withDuration: 0.5, delay: 0, options: [.beginFromCurrentState, .calculationModeLinear],
+            animations: {
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.1, animations: { views.forEach {
+                    if $0 is UILabel {
+                        $0.layer.backgroundColor = #colorLiteral(red: 0.549, green: 0.8941, blue: 1, alpha: 1)
+                    } else {
+                        $0.backgroundColor = #colorLiteral(red: 0.549, green: 0.8941, blue: 1, alpha: 1)
+                    }
+                }})
+                UIView.addKeyframe(withRelativeStartTime: 0.1, relativeDuration: 0.4, animations: { views.forEach {
+                    if $0 is UILabel {
+                        $0.layer.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                    } else {
+                        $0.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+                    }
+                }})
+            }, completion: nil
+        )
     }
 
     //MARK: UserDefaults

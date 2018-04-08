@@ -9,7 +9,7 @@ import UIKit
 
 class GradientTableViewFooterCell: UITableViewCell {
 
-    @IBOutlet weak var averagePriceLabel: UILabel!
+    @IBOutlet weak var averagePriceButton: UIButton!
     @IBOutlet weak var totalDollarLabel: UILabel!
     @IBOutlet weak var totalBtcLabel: UILabel!
     @IBOutlet weak var dealedDollarLabel: UILabel!
@@ -20,7 +20,7 @@ class GradientTableViewFooterCell: UITableViewCell {
         guard let gradient = gradient else {
             return
         }
-        averagePriceLabel.text = (gradient.average.roundedInt?.description).map { "\($0) 刀" }
+        averagePriceButton.setTitle((gradient.average.roundedInt?.description).map { "\($0) 刀" }, for: .normal)
         dealedBtcButton.setTitle(dealedBtcAmount.map {"\($0.toString(4)) BTC"}, for: .normal)
         dealedDollarLabel.text = (dealedDollarAmount?.roundedInt?.description).map {"\($0) 刀"}
         totalBtcLabel.text = gradient.totalBtc.map { "\($0.toString(4)) BTC" }
