@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -39,7 +40,7 @@
                                 <rect key="frame" x="0.0" y="88" width="375" height="690"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="du5-BA-sGG" userLabel="ContentView">
-                                        <rect key="frame" x="-0.66666666666665719" y="0.0" width="375" height="705"/>
+                                        <rect key="frame" x="-0.66666666666665719" y="0.0" width="375" height="805"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="o4G-En-D74">
                                                 <rect key="frame" x="10.333333333333343" y="0.0" width="354.66666666666663" height="705"/>
@@ -668,16 +669,28 @@
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                             </textField>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SB1-m6-nGy">
+                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="4t7-af-nv2">
                                                                 <rect key="frame" x="236.33333333333334" y="0.0" width="118.33333333333334" height="43"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="43" id="xZF-dZ-wWt"/>
-                                                                </constraints>
-                                                                <state key="normal" title="计算"/>
-                                                                <connections>
-                                                                    <segue destination="Vvs-mG-oiS" kind="show" identifier="gradientBtc" id="2m1-R0-lzk"/>
-                                                                </connections>
-                                                            </button>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PDq-Vs-bia">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="59.333333333333336" height="43"/>
+                                                                        <state key="normal" title="保存"/>
+                                                                        <connections>
+                                                                            <action selector="didTapSavePresetButtonWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fMf-RQ-Cne"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SB1-m6-nGy">
+                                                                        <rect key="frame" x="59.333333333333314" y="0.0" width="59" height="43"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="43" id="xZF-dZ-wWt"/>
+                                                                        </constraints>
+                                                                        <state key="normal" title="计算"/>
+                                                                        <connections>
+                                                                            <segue destination="Vvs-mG-oiS" kind="show" identifier="gradientBtc" id="2m1-R0-lzk"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </subviews>
+                                                            </stackView>
                                                         </subviews>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="43" id="Scy-Jg-jZU"/>
@@ -698,16 +711,28 @@
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                             </textField>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WMa-Bt-sRk">
+                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="owf-Hi-wfI">
                                                                 <rect key="frame" x="236.33333333333334" y="0.0" width="118.33333333333334" height="43"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="43" id="Bjp-Ei-Zia"/>
-                                                                </constraints>
-                                                                <state key="normal" title="计算"/>
-                                                                <connections>
-                                                                    <segue destination="Vvs-mG-oiS" kind="show" identifier="gradientDollar" id="uX9-qg-FgX"/>
-                                                                </connections>
-                                                            </button>
+                                                                <subviews>
+                                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y12-Oh-bSA">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="59.333333333333336" height="43"/>
+                                                                        <state key="normal" title="保存"/>
+                                                                        <connections>
+                                                                            <action selector="didTapSavePresetButtonWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="U0C-qL-3Jh"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WMa-Bt-sRk">
+                                                                        <rect key="frame" x="59.333333333333314" y="0.0" width="59" height="43"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="43" id="Bjp-Ei-Zia"/>
+                                                                        </constraints>
+                                                                        <state key="normal" title="计算"/>
+                                                                        <connections>
+                                                                            <segue destination="Vvs-mG-oiS" kind="show" identifier="gradientDollar" id="uX9-qg-FgX"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </subviews>
+                                                            </stackView>
                                                         </subviews>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="43" id="Dzd-6p-pvr"/>
@@ -729,16 +754,28 @@
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                                             </textField>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BnE-UU-sjq">
+                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="pw4-Yp-JbQ">
                                                                 <rect key="frame" x="236.33333333333334" y="0.0" width="118.33333333333334" height="43"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="43" id="9OJ-T1-A0k"/>
-                                                                </constraints>
-                                                                <state key="normal" title="计算"/>
-                                                                <connections>
-                                                                    <segue destination="Vvs-mG-oiS" kind="show" identifier="gradientPercentage" id="spz-M9-BsL"/>
-                                                                </connections>
-                                                            </button>
+                                                                <subviews>
+                                                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MRk-JK-EUO">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="59.333333333333336" height="43"/>
+                                                                        <state key="normal" title="保存"/>
+                                                                        <connections>
+                                                                            <action selector="didTapSavePresetButtonWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LUY-eR-Jjw"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BnE-UU-sjq">
+                                                                        <rect key="frame" x="59.333333333333314" y="0.0" width="59" height="43"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="43" id="9OJ-T1-A0k"/>
+                                                                        </constraints>
+                                                                        <state key="normal" title="计算"/>
+                                                                        <connections>
+                                                                            <segue destination="Vvs-mG-oiS" kind="show" identifier="gradientPercentage" id="spz-M9-BsL"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </subviews>
+                                                            </stackView>
                                                         </subviews>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="43" id="BUH-rn-nAz"/>
@@ -747,12 +784,52 @@
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="W1d-PD-fyl">
+                                                <rect key="frame" x="0.0" y="705" width="375" height="100"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="WCz-Fn-5iA"/>
+                                                </constraints>
+                                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <prototypes>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GradientPresetTableViewCell" id="Q0J-cQ-r5o" customClass="GradientPresetTableViewCell" customModule="AKPositionCalculator" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Q0J-cQ-r5o" id="2zz-Rx-y1d">
+                                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Qtb-CS-i25">
+                                                                    <rect key="frame" x="15" y="-10.666666666666666" width="345" height="21"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="Qtb-CS-i25" firstAttribute="centerY" secondItem="2zz-Rx-y1d" secondAttribute="centerY" id="8AC-sj-9bH"/>
+                                                                <constraint firstAttribute="bottomMargin" secondItem="Qtb-CS-i25" secondAttribute="bottom" id="Asw-Fe-3kl"/>
+                                                                <constraint firstItem="Qtb-CS-i25" firstAttribute="top" secondItem="2zz-Rx-y1d" secondAttribute="topMargin" id="Bbm-ea-DOc"/>
+                                                                <constraint firstAttribute="trailingMargin" secondItem="Qtb-CS-i25" secondAttribute="trailing" id="wSO-vh-hUO"/>
+                                                                <constraint firstItem="Qtb-CS-i25" firstAttribute="leading" secondItem="2zz-Rx-y1d" secondAttribute="leadingMargin" id="zIi-eS-rCb"/>
+                                                            </constraints>
+                                                        </tableViewCellContentView>
+                                                        <connections>
+                                                            <outlet property="infoLabel" destination="Qtb-CS-i25" id="3Nz-jB-zvi"/>
+                                                            <segue destination="Vvs-mG-oiS" kind="show" identifier="selectPreset" id="O9T-Zj-ZvC"/>
+                                                        </connections>
+                                                    </tableViewCell>
+                                                </prototypes>
+                                            </tableView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="o4G-En-D74" firstAttribute="leading" secondItem="du5-BA-sGG" secondAttribute="leading" constant="10" id="FXu-iN-HkT"/>
-                                            <constraint firstAttribute="bottom" secondItem="o4G-En-D74" secondAttribute="bottom" id="PLz-OK-jVf"/>
+                                            <constraint firstAttribute="trailing" secondItem="W1d-PD-fyl" secondAttribute="trailing" id="Nes-ig-ggW"/>
+                                            <constraint firstAttribute="bottom" secondItem="W1d-PD-fyl" secondAttribute="bottom" id="VE6-aC-3N0"/>
                                             <constraint firstItem="o4G-En-D74" firstAttribute="top" secondItem="du5-BA-sGG" secondAttribute="top" id="Vv4-fJ-ive"/>
+                                            <constraint firstItem="o4G-En-D74" firstAttribute="bottom" secondItem="W1d-PD-fyl" secondAttribute="top" id="nEH-Iq-nE4"/>
+                                            <constraint firstItem="W1d-PD-fyl" firstAttribute="leading" secondItem="du5-BA-sGG" secondAttribute="leading" id="pOq-yu-zCL"/>
                                             <constraint firstAttribute="trailing" secondItem="o4G-En-D74" secondAttribute="trailing" constant="10" id="tgG-gT-QzP"/>
                                         </constraints>
                                     </view>
@@ -807,6 +884,8 @@
                         <outlet property="myCapitalField" destination="LkW-MP-OWl" id="0Pc-c0-1Sj"/>
                         <outlet property="myPositionBtcLabel" destination="NMS-bU-Dfp" id="mj3-iv-7aP"/>
                         <outlet property="myPositionLabel" destination="bVV-qQ-NZ4" id="dL7-EX-ni9"/>
+                        <outlet property="presetTableView" destination="W1d-PD-fyl" id="1v9-Z8-mqo"/>
+                        <outlet property="presetTableViewHeight" destination="WCz-Fn-5iA" id="CaD-NX-RLb"/>
                         <outlet property="progressView" destination="Sjn-Iy-9Sm" id="0fp-N0-YyC"/>
                         <outlet property="scrollView" destination="erO-or-xUN" id="0uc-8o-pR6"/>
                         <outlet property="standardRatioLabel" destination="fhO-qR-7rr" id="vsf-Dg-TDt"/>
@@ -1156,6 +1235,6 @@ SOFTWARE.</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="uX9-qg-FgX"/>
+        <segue reference="O9T-Zj-ZvC"/>
     </inferredMetricsTieBreakers>
 </document>

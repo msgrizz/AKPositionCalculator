@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     private let bitmex = MoyaProvider<Bitmex>()
     private let disposeBag = DisposeBag()
     private var unwindClosure: (() -> Void)?
+    fileprivate var presets = [Gradient]()
 
     //MARK: - IBOutlet
 
@@ -53,6 +54,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var gradientPercentageField: ValueField!
     @IBOutlet weak var basicSettingButton:  UIButton!
     @IBOutlet weak var basicSettingViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var presetTableView: UITableView!
+    @IBOutlet weak var presetTableViewHeight: NSLayoutConstraint!
 
     //MARK: - IBAction
 
@@ -115,14 +118,29 @@ class ViewController: UIViewController {
         UIPasteboard.general.string = customPositionLabel.text
     }
 
+    @IBAction func didTapSavePresetButton(sender: UIButton) {
+
+        guard let inputType = GradientInputType(rawValue: sender.tag) else {
+            return
+        }
+        presets.append(gradientSetting(for: inputType))
+        presetTableView.insertRows(at: [IndexPath(row: presets.count - 1, section: 0)], with: .automatic)
+        layoutPresetTableView()
+        scrollView.layoutIfNeeded()
+        let bottom = scrollView.contentSize.height - scrollView.bounds.height
+        bottom > 0 ? scrollView.setContentOffset(CGPoint(x: 0, y: bottom), animated: true) : ()
+    }
+
     //MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         showAlert()
+        loadUserDefaults()
         setupBasicSettingView()
         setupFields()
+        setupPresetTableView()
         fetch()
 
         NotificationCenter.default.addObserver(self, selector: #selector(appWillTerminateNotification),
@@ -133,7 +151,6 @@ class ViewController: UIViewController {
         super.viewWillAppear(animated)
 
         resetContentInset(animated: false)
-        loadUserDefaults()
         calculate([.standardRatio, .myPosition])
     }
 
@@ -165,26 +182,15 @@ class ViewController: UIViewController {
             return
         }
         if segue.identifier == "gradientBtc" {
-            vc.gradient = Gradient(
-                position:   .btc(gradientBtcField.value * customRatioField.value),
-                startPrice: startPriceField.value,
-                endPrice:   endPriceField.value,
-                interval:   intervalField.value
-            )
+            vc.gradient = gradientSetting(for: .btc)
         } else if segue.identifier == "gradientDollar" {
-            vc.gradient = Gradient(
-                position:   .dollar(gradientDollarField.value * 10000 * customRatioField.value),
-                startPrice: startPriceField.value,
-                endPrice:   endPriceField.value,
-                interval:   intervalField.value
-            )
+            vc.gradient = gradientSetting(for: .dollar)
         } else if segue.identifier == "gradientPercentage" {
-            vc.gradient = Gradient(
-                position:   .dollar((gradientPercentageField.value / 10) * myCapitalField.value * 10000),
-                startPrice: startPriceField.value,
-                endPrice:   endPriceField.value,
-                interval:   intervalField.value
-            )
+            vc.gradient = gradientSetting(for: .position)
+        } else if segue.identifier == "selectPreset" {
+            if let cell = sender as? GradientPresetTableViewCell, let indexPath = presetTableView.indexPath(for: cell) {
+                vc.gradient = presets[indexPath.row]
+            }
         }
     }
 
@@ -316,6 +322,41 @@ class ViewController: UIViewController {
         customPositionLabel.text = (customBtcField.value * customPriceField.value).roundedInt?.description
     }
 
+    //MARK: Data Preparation
+
+    private func gradientSetting(for type: GradientInputType) -> Gradient {
+
+        switch type {
+        case .btc:
+            let value = gradientBtcField.value * customRatioField.value
+            return Gradient(
+                position:   .btc(value),
+                startPrice: startPriceField.value,
+                endPrice:   endPriceField.value,
+                interval:   intervalField.value,
+                description: "\(startPriceField.text ?? "")~\(endPriceField.text ?? "") (\(intervalField.text ?? "")) AK: \(gradientBtcField.text ?? "")BTC 我: \(value.roundedInt?.description ?? "")BTC (x\(customRatioField.text ?? ""))"
+            )
+        case .dollar:
+            let value = gradientDollarField.value * customRatioField.value
+            return Gradient(
+                position:   .dollar(value * 10000),
+                startPrice: startPriceField.value,
+                endPrice:   endPriceField.value,
+                interval:   intervalField.value,
+                description: "\(startPriceField.text ?? "")~\(endPriceField.text ?? "") (\(intervalField.text ?? "")) AK: \(gradientDollarField.text ?? "")万刀 我: \(value.roundedInt?.description ?? "")万刀 (x\(customRatioField.text ?? ""))"
+            )
+        case .position:
+            let value = (gradientPercentageField.value / 10) * myCapitalField.value
+            return Gradient(
+                position:   .dollar(value * 10000),
+                startPrice: startPriceField.value,
+                endPrice:   endPriceField.value,
+                interval:   intervalField.value,
+                description: "\(startPriceField.text ?? "")~\(endPriceField.text ?? "") (\(intervalField.text ?? "")) \(gradientPercentageField.text ?? "")成仓 (我: \(value.roundedInt?.description ?? "")万刀)"
+            )
+        }
+    }
+
     //MARK: View Control
 
     private func showAlert() {
@@ -398,6 +439,19 @@ class ViewController: UIViewController {
         )
     }
 
+    private func setupPresetTableView() {
+
+        presetTableView.dataSource = self
+        presetTableView.delegate = self
+        layoutPresetTableView()
+    }
+
+    private func layoutPresetTableView() {
+
+        presetTableView.layoutIfNeeded()
+        presetTableViewHeight.constant = presetTableView.contentSize.height
+    }
+
     //MARK: UserDefaults
 
     private func saveUserDefaults() {
@@ -414,6 +468,10 @@ class ViewController: UIViewController {
         UserDefaults.standard.set(startPriceField.value,        forKey: UserDefaultsKey.startPrice)
         UserDefaults.standard.set(endPriceField.value,          forKey: UserDefaultsKey.endPrice)
         UserDefaults.standard.set(intervalField.value,          forKey: UserDefaultsKey.interval)
+
+        if let presetData = try? JSONEncoder().encode(presets) {
+            UserDefaults.standard.set(presetData, forKey: UserDefaultsKey.gradientPreset)
+        }
     }
 
     private func loadUserDefaults() {
@@ -430,6 +488,10 @@ class ViewController: UIViewController {
         startPriceField.value           = UserDefaults.standard.double(forKey: UserDefaultsKey.startPrice)
         endPriceField.value             = UserDefaults.standard.double(forKey: UserDefaultsKey.endPrice)
         intervalField.value             = UserDefaults.standard.double(forKey: UserDefaultsKey.interval)
+
+        if let presetData = UserDefaults.standard.value(forKey: UserDefaultsKey.gradientPreset) as? Data {
+            presets = (try? JSONDecoder().decode([Gradient].self, from: presetData)) ?? []
+        }
     }
 
 }
@@ -449,5 +511,41 @@ extension ViewController: UITextFieldDelegate {
         let keyboardHeight = CGFloat(350)
         scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
         scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+    }
+}
+
+extension ViewController: UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return presets.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        let cell = tableView.dequeueReusableCell(withIdentifier: "GradientPresetTableViewCell", for: indexPath) as! GradientPresetTableViewCell
+        cell.setup(gradient: presets[indexPath.row])
+        return cell
+    }
+}
+
+extension ViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+        let delete = UIContextualAction(style: .normal, title: "删除", handler: { [weak self] action, view, success in
+            success(true)
+            self?.presets.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            self?.layoutPresetTableView()
+            UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveLinear, animations: { [weak self] in
+                self?.scrollView.layoutIfNeeded()
+            }, completion: nil)
+        })
+        delete.backgroundColor = .red
+        return UISwipeActionsConfiguration(actions: [delete])
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 }

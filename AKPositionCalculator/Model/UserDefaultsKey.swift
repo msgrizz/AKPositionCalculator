@@ -24,4 +24,5 @@ struct UserDefaultsKey {
     static let startPrice           = "startPrice"
     static let endPrice             = "endPrice"
     static let interval             = "interval"
+    static let gradientPreset       = "gradientPreset"
 }

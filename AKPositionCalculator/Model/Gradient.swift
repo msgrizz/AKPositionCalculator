@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct Gradient {
+struct Gradient: Codable {
 
-    enum Position {
+    enum Position: Codable {
         case btc(Double)
         case dollar(Double)
     }
@@ -18,6 +18,7 @@ struct Gradient {
     let startPrice: Double
     let endPrice: Double
     let interval: Double
+    let description: String
 
     private var orderCount: Int? {
         return Int(exactly: ceil(abs(startPrice - endPrice) / interval)).map { $0 + 1 }
@@ -83,4 +84,39 @@ struct Order {
     let price: Int?
     let btcAmount: Double?
     let dollarAmount: Double?
+}
+
+extension Gradient.Position {
+
+    private enum CodingKeys: String, CodingKey {
+        case btc
+        case dollar
+    }
+
+    enum PostTypeCodingError: Error {
+        case decoding(String)
+    }
+
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        if let value = try? values.decode(Double.self, forKey: .btc) {
+            self = .btc(value)
+            return
+        }
+        if let value = try? values.decode(Double.self, forKey: .dollar) {
+            self = .dollar(value)
+            return
+        }
+        throw PostTypeCodingError.decoding("Whoops! \(dump(values))")
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        switch self {
+        case .btc(let value):
+            try container.encode(value, forKey: .btc)
+        case .dollar(let value):
+            try container.encode(value, forKey: .dollar)
+        }
+    }
 }

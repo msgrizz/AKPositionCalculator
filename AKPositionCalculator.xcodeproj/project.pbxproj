@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2700E2102079D53D00D05BD2 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700E20F2079D53D00D05BD2 /* Common.swift */; };
+		2700E2152079E55000D05BD2 /* GradientPresetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700E2132079E55000D05BD2 /* GradientPresetTableViewCell.swift */; };
 		271464FC205CB4B400DE85CF /* GradientTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271464FB205CB4B400DE85CF /* GradientTableViewController.swift */; };
 		271464FE205CBE8400DE85CF /* Gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271464FD205CBE8400DE85CF /* Gradient.swift */; };
 		27146500205CBF9B00DE85CF /* GradientTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271464FF205CBF9B00DE85CF /* GradientTableViewCell.swift */; };
@@ -82,6 +84,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2700E20F2079D53D00D05BD2 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		2700E2132079E55000D05BD2 /* GradientPresetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientPresetTableViewCell.swift; sourceTree = "<group>"; };
 		271464FB205CB4B400DE85CF /* GradientTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientTableViewController.swift; sourceTree = "<group>"; };
 		271464FD205CBE8400DE85CF /* Gradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gradient.swift; sourceTree = "<group>"; };
 		271464FF205CBF9B00DE85CF /* GradientTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientTableViewCell.swift; sourceTree = "<group>"; };
@@ -251,6 +255,7 @@
 				27511B5D205BB560005ACF65 /* ValueField.swift */,
 				271464FF205CBF9B00DE85CF /* GradientTableViewCell.swift */,
 				274154CD205DFF7700A4BE1B /* GradientTableViewFooterCell.swift */,
+				2700E2132079E55000D05BD2 /* GradientPresetTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -269,6 +274,7 @@
 		27511B5C205BB50D005ACF65 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2700E20F2079D53D00D05BD2 /* Common.swift */,
 				27511B5F205C9D9F005ACF65 /* CalculationOptions.swift */,
 				271464FD205CBE8400DE85CF /* Gradient.swift */,
 				27415467205CF39B00A4BE1B /* UserDefaultsKey.swift */,
@@ -437,9 +443,11 @@
 				274154CA205D1BD700A4BE1B /* Bitstamp.swift in Sources */,
 				2749DEEE20752A0800ABB1B8 /* Bool.swift in Sources */,
 				27415468205CF39B00A4BE1B /* UserDefaultsKey.swift in Sources */,
+				2700E2102079D53D00D05BD2 /* Common.swift in Sources */,
 				27511B5E205BB560005ACF65 /* ValueField.swift in Sources */,
 				27E65B9A206FC157007F17F1 /* AboutViewController.swift in Sources */,
 				271464FE205CBE8400DE85CF /* Gradient.swift in Sources */,
+				2700E2152079E55000D05BD2 /* GradientPresetTableViewCell.swift in Sources */,
 				27146502205CCCE700DE85CF /* Double.swift in Sources */,
 				27511B2C205B94E6005ACF65 /* ViewController.swift in Sources */,
 				27146500205CBF9B00DE85CF /* GradientTableViewCell.swift in Sources */,
@@ -629,7 +637,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = AKPositionCalculator/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = moe.coin.AKPositionCalculator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -651,7 +659,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = AKPositionCalculator/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = moe.coin.AKPositionCalculator;
