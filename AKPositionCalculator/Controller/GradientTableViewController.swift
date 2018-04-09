@@ -20,18 +20,18 @@ class GradientTableViewController: UITableViewController {
     private var segment = Segment.equalBtc
     fileprivate var priceCheckedIndexPaths = [IndexPath]()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        unwindPrice = gradient?.average
-    }
-
     @IBAction func equalSegmentDidChange(sender: UISegmentedControl) {
 
         guard let segment = Segment(rawValue: sender.selectedSegmentIndex) else {
             return
         }
         self.segment = segment
+        tableView.reloadData()
+    }
+
+    @IBAction func didTapReversePriceButton(sender: UIButton) {
+
+        gradient?.swapPrice()
         tableView.reloadData()
     }
 
@@ -63,27 +63,39 @@ class GradientTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 
-        let headerCell = tableView.dequeueReusableCell(withIdentifier: "GradientTableViewHeaderCell")!
-        return headerCell.contentView
+        let header = tableView.dequeueReusableCell(withIdentifier: "GradientTableViewHeaderCell") as! GradientTableViewHeaderCell
+        return header
     }
 
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
 
-        let footerCell = tableView.dequeueReusableCell(withIdentifier: "GradientTableViewFooterCell") as! GradientTableViewFooterCell
+        let footer = tableView.dequeueReusableCell(withIdentifier: "GradientTableViewFooterCell") as! GradientTableViewFooterCell
         let n = tableView.numberOfRows(inSection: 0) - priceCheckedIndexPaths.count
         switch segment {
         case .equalBtc:
-            unwindBtc = gradient?.equalBtcOrders?.dropLast(n).reduce(0) { $0 + ($1.btcAmount ?? 0) }
-            footerCell.setup(gradient: gradient,
+            guard let orders = gradient?.equalBtcOrders?.dropLast(n) else {
+                return footer
+            }
+            unwindBtc = orders.reduce(0) { $0 + ($1.btcAmount ?? 0) }
+            unwindPrice = orders.count == 0 ? gradient?.average
+                : orders.compactMap { $0.price }.reduce(0) { $0 + Double($1) } / Double(orders.count)
+            footer.setup(gradient: gradient,
+                             averagePrice: unwindPrice,
                              dealedBtcAmount: unwindBtc,
-                             dealedDollarAmount: gradient?.equalBtcOrders?.dropLast(n).reduce(0) { $0 + ($1.dollarAmount ?? 0) })
+                             dealedDollarAmount: orders.reduce(0) { $0 + ($1.dollarAmount ?? 0) })
         case .equalDollar:
-            unwindBtc = gradient?.equalDollarOrders?.dropLast(n).reduce(0) { $0 + ($1.btcAmount ?? 0) }
-            footerCell.setup(gradient: gradient,
+            guard let orders = gradient?.equalDollarOrders?.dropLast(n) else {
+                return footer
+            }
+            unwindBtc = orders.reduce(0) { $0 + ($1.btcAmount ?? 0) }
+            unwindPrice = orders.count == 0 ? gradient?.average
+                : orders.compactMap { $0.price }.reduce(0) { $0 + Double($1) }  / Double(orders.count)
+            footer.setup(gradient: gradient,
+                             averagePrice: unwindPrice,
                              dealedBtcAmount: unwindBtc,
-                             dealedDollarAmount: gradient?.equalDollarOrders?.dropLast(n).reduce(0) { $0 + ($1.dollarAmount ?? 0) })
+                             dealedDollarAmount: orders.reduce(0) { $0 + ($1.dollarAmount ?? 0) })
         }
-        return footerCell
+        return footer
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -91,7 +103,7 @@ class GradientTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 60
+        return 80
     }
 
 }

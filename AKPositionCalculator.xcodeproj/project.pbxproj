@@ -43,6 +43,7 @@
 		27511B4A205B94E6005ACF65 /* AKPositionCalculatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27511B49205B94E6005ACF65 /* AKPositionCalculatorUITests.swift */; };
 		27511B5E205BB560005ACF65 /* ValueField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27511B5D205BB560005ACF65 /* ValueField.swift */; };
 		27511B60205C9D9F005ACF65 /* CalculationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27511B5F205C9D9F005ACF65 /* CalculationOptions.swift */; };
+		2786F5C8207BB375009C6124 /* GradientTableViewHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2786F5C7207BB375009C6124 /* GradientTableViewHeaderCell.swift */; };
 		27E65B9A206FC157007F17F1 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E65B99206FC157007F17F1 /* AboutViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -122,6 +123,7 @@
 		27511B4B205B94E6005ACF65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27511B5D205BB560005ACF65 /* ValueField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueField.swift; sourceTree = "<group>"; };
 		27511B5F205C9D9F005ACF65 /* CalculationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationOptions.swift; sourceTree = "<group>"; };
+		2786F5C7207BB375009C6124 /* GradientTableViewHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientTableViewHeaderCell.swift; sourceTree = "<group>"; };
 		27E65B99206FC157007F17F1 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -254,6 +256,7 @@
 			children = (
 				27511B5D205BB560005ACF65 /* ValueField.swift */,
 				271464FF205CBF9B00DE85CF /* GradientTableViewCell.swift */,
+				2786F5C7207BB375009C6124 /* GradientTableViewHeaderCell.swift */,
 				274154CD205DFF7700A4BE1B /* GradientTableViewFooterCell.swift */,
 				2700E2132079E55000D05BD2 /* GradientPresetTableViewCell.swift */,
 			);
@@ -450,6 +453,7 @@
 				2700E2152079E55000D05BD2 /* GradientPresetTableViewCell.swift in Sources */,
 				27146502205CCCE700DE85CF /* Double.swift in Sources */,
 				27511B2C205B94E6005ACF65 /* ViewController.swift in Sources */,
+				2786F5C8207BB375009C6124 /* GradientTableViewHeaderCell.swift in Sources */,
 				27146500205CBF9B00DE85CF /* GradientTableViewCell.swift in Sources */,
 				274154CE205DFF7700A4BE1B /* GradientTableViewFooterCell.swift in Sources */,
 				2741546A205CFA9B00A4BE1B /* UserDefaults.swift in Sources */,

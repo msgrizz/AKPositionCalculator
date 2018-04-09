@@ -131,6 +131,13 @@ class ViewController: UIViewController {
         bottom > 0 ? scrollView.setContentOffset(CGPoint(x: 0, y: bottom), animated: true) : ()
     }
 
+    @IBAction func didTapReversePriceButton(sender: UIButton) {
+
+        lightImpactFeedback.impactOccurred()
+        swap(&startPriceField.text, &endPriceField.text)
+        shine(views: [startPriceField, endPriceField])
+    }
+
     //MARK: - Life Cycle
 
     override func viewDidLoad() {
@@ -533,13 +540,17 @@ extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
         let delete = UIContextualAction(style: .normal, title: "删除", handler: { [weak self] action, view, success in
-            success(true)
-            self?.presets.remove(at: indexPath.row)
+            guard let weakSelf = self else {
+                success(false)
+                return
+            }
+            weakSelf.presets.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
-            self?.layoutPresetTableView()
+            weakSelf.layoutPresetTableView()
             UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveLinear, animations: { [weak self] in
                 self?.scrollView.layoutIfNeeded()
             }, completion: nil)
+            success(true)
         })
         delete.backgroundColor = .red
         return UISwipeActionsConfiguration(actions: [delete])

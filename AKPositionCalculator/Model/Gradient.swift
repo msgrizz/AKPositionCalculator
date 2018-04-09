@@ -15,8 +15,8 @@ struct Gradient: Codable {
     }
 
     let position: Position
-    let startPrice: Double
-    let endPrice: Double
+    var startPrice: Double
+    var endPrice: Double
     let interval: Double
     let description: String
 
@@ -76,6 +76,10 @@ struct Gradient: Codable {
 
     var totalDollar: Double? {
         return equalDollarOrders?.reduce(0) { $0 + ($1.dollarAmount ?? 0) }
+    }
+
+    mutating func swapPrice() {
+        swap(&startPrice, &endPrice)
     }
 }
 

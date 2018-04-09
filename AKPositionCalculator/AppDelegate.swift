@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         let oldVersion = UserDefaults.standard.string(forKey: UserDefaultsKey.version)
-        if newVersion == oldVersion || oldVersion == "1.0.3" || oldVersion == "1.0.4" {
+        guard oldVersion == "1.0.0" || oldVersion == "1.0.1" || oldVersion == "1.0.2" else {
             return
         }
         UserDefaults.setDefaultValues()
