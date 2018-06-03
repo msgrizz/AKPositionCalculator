@@ -148,7 +148,7 @@ extension Bitmex: TargetType {
         case .swap:
             return .requestParameters(parameters: ["symbol": "XBT"], encoding: URLEncoding.queryString)
         case .quarterly:
-            return .requestParameters(parameters: ["symbol": "XBT:quarterly"], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["symbol": "XBT:monthly"], encoding: URLEncoding.queryString)
         case .biquarterly:
             return .requestParameters(parameters: ["symbol": "XBT:biquarterly"], encoding: URLEncoding.queryString)
         }
